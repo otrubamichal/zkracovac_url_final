@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block obsah %}
+
+<h1>Seznam vašich zkrácených odkazů:</h1>
+
+<table style="border-collapse: collapse">
+    <tr>
+        <th class="utab">Toto je tvoje původní adresa</th>
+        <th class="utab1">Toto je tvoje zkrácená adresa</th>
+    </tr>
+    {% for x in urla %}
+    <tr>
+        <td class="bunka">{{x[0]}}</td>
+        <td class="bunka_s">http://127.0.0.1:12345/zkracovac/{{x[1]}}</td>
+    </tr>
+        {% endfor %}
+
+    <tr>
+    
+    </tr>
+
+</table>
+
+
+{% endblock obsah %}

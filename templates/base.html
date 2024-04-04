@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>{%block title%}FlaskTemplate{%endblock%}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='logo1.png') }}"
+    />
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <nav>
+      <img src="{{ url_for('static', filename='logo1.png') }}" />
+
+      <ul>
+        <li class="tlvl"><a href="{{ url_for('zkracovac') }}">Zkracovač</a></li>
+        <li class="tlvl"><a href="{{ url_for('seznam') }}">Seznam</a></li>
+        <li class="tlvp"><a href="{{ url_for('register') }}">Register</a></li>
+        <li class="tlvp"><a href="{{ url_for('login') }}">Login</a></li>
+        {% if "user" in session %}
+        <li class="odh">
+            Přihlášen {{ session["user"]}}.
+        </li>
+        <li class="tlvpo"><a href="{{url_for('logout') }}">Logout</a></li>
+        {% else %}
+        <li class="pri">
+          Nikdo není přihlášen.
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+    <p class="message {{ category }}">{{ message }}</p>
+
+    {% endfor %} {% block obsah %}
+
+    <h1>Zkracovač</h1>
+
+    <p class="uvod">
+      Děkujeme za návštěvu webu pro zkracování odkazů. Doufám, že se vám bude
+      líbit!
+    </p>
+
+    {% endblock obsah %}
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block obsah %}
+
+<h1 class="zkrac">
+Zkracovač pro vaše odkazy:
+</h1>
+
+<p class="zkrac"> 
+Zde vložte váš odkaz, který chcete zkrátit
+</p>
+
+<form class="gen" method="POST">
+ <textarea name="url"  cols="100" rows="10">
+
+ </textarea>
+            <p class="gen">
+            <button type="submit">Vygenerovat novou url</button>
+            </p>
+</form> 
+<p class="gen"> Vaše nová adresa:</p>
+<p class="nov"> <a href="http://127.0.0.1:12345/zkracovac/{{shorturl}}">http://127.0.0.1:12345/zkracovac/{{shorturl}}</a></p>
+{% endblock obsah %}

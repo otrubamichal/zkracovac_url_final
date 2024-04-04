@@ -1,0 +1,35 @@
+@app.route("/seznam/", methods=["GET"])
+def seznam():
+    if "user" not in session:
+        flash("Tato stránka je pouze pro přihlášené!", "error")
+        return redirect(url_for("login", url=request.path))
+
+    with SQLite("data.sqlite") as cursor:
+        response = cursor.execute(
+            "SELECT login, body, datetime, message.id FROM user JOIN message ON user.id = message.user_id ORDER BY datetime DESC"
+            )
+        response=response.fetchall()
+
+    return render_template("seznam.html", response=response, d=datetime.datetime)
+
+
+@app.route("/seznam/", methods=["POST"])
+def seznam_post():
+    if "user" not in session:
+        flash("Tato stránka je pouze pro přihlášené!", "error")
+        return redirect(url_for("login", url=request.path))
+
+    with SQLite("data.sqlite") as cursor:
+        response = cursor.execute("SELECT id FROM user WHERE login=?", [session["user"]]
+        )
+        response = response.fetchone()
+        user_id=list(response)[0]
+
+    vzkaz = request.form.get("vzkaz")
+    if vzkaz:
+        with SQLite("data.sqlite") as cursor:
+            cursor.execute(
+                "INSERT INTO message (user_id, body, datetime) VALUES (?,?,?)",
+                [user_id, vzkaz, datetime.datetime.now()]
+            )
+    return redirect(url_for("seznam"))
